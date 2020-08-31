@@ -11,6 +11,7 @@ fn steepest_descent_with_both() {
     let eps = 1e-4;
     let search_lam = |f_nextx: &dyn Fn(f64) -> f64| om_gs::search(0.0..1.0, eps, f_nextx);
     let x = om_sd::search_2d(init, eps, f, grad, search_lam);
+    println!("Steepest descent search");
     println!("x : {{{}, {}}}", x[0], x[1]);
     println!("J1: {}", f(x));
     println!("");
@@ -25,6 +26,28 @@ fn steepest_descent_with_both() {
     let eps = 1e-4;
     let search_lam = |f_nextx: &dyn Fn(f64) -> f64| om_gs::search(0.0..1.0, eps, f_nextx);
     let x = om_sd::search_3d(init, eps, f, grad, search_lam);
+    println!("Steepest descent search");
+    println!("x : {{{}, {}, {}}}", x[0], x[1], x[2]);
+    println!("J2: {}", f(x));
+    println!("");
+}
+
+fn hooke_jeeves_with_both() {
+    let init_per = 1.0;
+    let eps = 1e-4;
+
+    let f = |x: Vector2<f64>| x[0].powi(2) + x.norm_squared().exp() + 4.0 * x[0] + 3.0 * x[1];
+    let init_x = Vector2::new(0.0, 0.0);
+    let x = om_hj::search_2d(init_x, init_per, eps, f);
+    println!("Hooke-Jeeves search");
+    println!("x : {{{}, {}}}", x[0], x[1]);
+    println!("J1: {}", f(x));
+    println!("");
+
+    let f = |x: Vector3<f64>| x[0].powi(4) + x[1].powi(4) + (x[0] * x[1]).powi(2) + (5.0 + x[1].powi(2) + 2.0 * x[2].powi(2)).sqrt() + x[0] + x[2];
+    let init_x = Vector3::new(0.0, 0.0, 0.0);
+    let x = om_hj::search_3d(init_x, init_per, eps, f);
+    println!("Hooke-Jeeves search");
     println!("x : {{{}, {}, {}}}", x[0], x[1], x[2]);
     println!("J2: {}", f(x));
     println!("");
@@ -32,4 +55,5 @@ fn steepest_descent_with_both() {
 
 fn main() {
     steepest_descent_with_both();
+    hooke_jeeves_with_both();
 }

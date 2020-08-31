@@ -119,10 +119,18 @@ name = "om-gs"
 version = "0.1.0"
 
 [[package]]
+name = "om-hj"
+version = "0.1.0"
+dependencies = [
+ "nalgebra",
+]
+
+[[package]]
 name = "om-ict2"
 version = "0.1.0"
 dependencies = [
  "om-gs",
+ "om-hj",
  "om-sd",
 ]
 
